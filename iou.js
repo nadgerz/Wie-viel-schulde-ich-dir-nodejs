@@ -51,14 +51,14 @@ all_people = [ "steve", "maurice", "kerstin", "bernhard", "simone", "katarina" ]
 //    Pick a random number of people from the full list, with
 //    a minimum of 2 people.
 //
-const num_people = Math.floor(Math.random() * all_people.length) + 1
+const num_people = Math.ceil(Math.random() * all_people.length)
 console.log( num_people )
 
 // process.exit(0)
 
 const people = all_people.slice(0, num_people)
 console.log( people )
-process.exit(0)
+// process.exit(0)
 
 //
 //    Create a random number of transaction.
@@ -70,6 +70,8 @@ console.log( num_transactions )
 //
 //    Generate some random transactions.
 //
+const MAX_OWED = 20;
+
 for( i = 0; i<= num_transactions; i++) {
     console.log( `Loop: ${i}` )
 
@@ -90,5 +92,10 @@ for( i = 0; i<= num_transactions; i++) {
     //
     //    Now a random $ amount
     //
-
+    const owed = Math.floor(Math.random() * MAX_OWED * 100) / 100
+    console.log( `Owed => ${owed}`)
 }
+
+
+
+process.exit( 0 )
