@@ -56,7 +56,7 @@ const num_people = Math.floor(Math.random() * all_people.length) + 2
 //process.exit(0)
 
 // const people = all_people.slice(0, num_people)
-const people = all_people.slice(0, 2)
+const people = all_people.slice(0, 3)
 // console.log( people )
 // process.exit(0)
 
@@ -94,7 +94,9 @@ for( i = 1; i<= num_transactions; i++) {
     //
     //    Now a random $ amount
     //
-    const owed = Math.floor(Math.random() * MAX_OWED * 100) / 100
+    //    Note: This is in cents, so we convert totals at end.
+    //
+    const owed = Math.floor(Math.random() * MAX_OWED * 100)
     // console.log( `Owed => ${owed}`)
 
     console.log( `Xact ${i}: ${people[p1]} owes ${people[p2]} $${owed}`)
@@ -113,34 +115,75 @@ console.log( transactions )
 
 // Now run along transactions array and make a hash for the amount.
 const xacts = {}
-console.log( typeof xacts )
+// console.log( typeof xacts )
 
 transactions.map( (transaction,idx) => {
     const { parasite, benefactor, owed } = transaction
-    console.log( `XACT: ${idx + 1}` )
-    console.log( parasite, benefactor, owed )
+    // console.log( `XACT: ${idx + 1}` )
+    // console.log( parasite, benefactor, owed )
 
     const key = `${parasite}_${benefactor}`
     // console.log( key )
     // console.log( typeof key )
 
     const current = xacts[`${key}`]
-    console.log( current )
-    console.log( typeof current )
-    console.log( typeof owed )
+    // console.log( current )
+    // console.log( typeof current )
+    // console.log( typeof owed )
 
     if ( current ) {
-	console.log( 'there' )
+	// console.log( 'there' )
 	xacts[`${key}`] = current + owed
     } else {
 	console.log( 'here')
 	xacts[`${key}`] = owed
-	console.log( xacts )
-	console.log( 'que?' )
+	// console.log( xacts )
+	// console.log( 'que?' )
     }
 
     // console.log( xacts[`${key}`] )
 })
+
+console.log( xacts )
+
+//
+//    Now go through the transactions and check for bi-directional owing
+//    and simplify.
+//
+let keys = Object.entries(xacts).map(([key, value]) => {
+    console.log( key )
+    console.log( value )
+    return key
+})
+
+console.log( keys )
+
+//
+//    Change to foreach
+//
+for( i = 0; i < keys.length; i++) {
+    [p1, p2] = keys[i].split('_')
+    const owed = xacts[`${keys[i]}`]
+
+    console.log( `Loop ${i}`, p1, p2, owed )
+
+    const opposite_key = `${p2}_${p1}`
+    const opposite_owed = xacts[`${opposite_key}`]
+    console.log( opposite_key )
+    console.log( opposite_owed )
+
+    if (opposite_owed) {
+	if ( owed >= opposite_owed ) {
+	    const new_owed = owed - opposite_owed
+	    xacts[i] = new_owed
+	    xacts[`${opposite_key}`] = 0
+	} else {
+	    const new_owed = opposite_owed - owed
+	    xacts[`${opposite_key}`] = new_owed
+	    xacts[i] = 0
+	}
+    }
+}
 
 console.log( xacts )
 
