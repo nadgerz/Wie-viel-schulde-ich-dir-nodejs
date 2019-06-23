@@ -69,7 +69,7 @@ console.log( `Number of transactions: ${num_transactions}` )
 //
 //    Generate some random transactions.
 //
-const transactions = []
+let transactions = []
 const MAX_OWED = 20;
 
 for( i = 1; i<= num_transactions; i++) {
@@ -97,7 +97,7 @@ for( i = 1; i<= num_transactions; i++) {
 
     console.log( `Xact ${i}: ${people[p1]} owes ${people[p2]} $${owed}`)
 
-    transactions.concat(
+    transactions = transactions.concat(
 	{
 	    parasite: p1,
 	    benefactor: p2,
@@ -107,5 +107,32 @@ for( i = 1; i<= num_transactions; i++) {
 }
 
 console.log( transactions )
+
+
+// Now run along transactions array and make a hash for the amount.
+const xacts = {}
+console.log( typeof xacts )
+
+transactions.map( transaction => {
+    const { parasite, benefactor, owed } = transaction
+    console.log( parasite, benefactor, owed )
+
+    const key = `${parasite}_${benefactor}`
+
+    const current = xacts[key]
+    //console.log( current )
+    //console.log( typeof current )
+    console.log( typeof owed )
+
+    if ( current !== 'undefined' ) {
+	xacts.key = current + owed
+    } else {
+	xacts.key = owed
+    }
+    console.log( key )
+    console.log( xacts.key )
+})
+
+console.log( xacts )
 
 process.exit( 0 )
