@@ -55,7 +55,8 @@ const num_people = Math.floor(Math.random() * all_people.length) + 2
 // console.log( num_people )
 //process.exit(0)
 
-const people = all_people.slice(0, num_people)
+// const people = all_people.slice(0, num_people)
+const people = all_people.slice(0, 2)
 // console.log( people )
 // process.exit(0)
 
@@ -63,6 +64,7 @@ const people = all_people.slice(0, num_people)
 //    Create a random number of transaction.
 //
 const MAX_TRANSACTIONS = 20
+// const MAX_TRANSACTIONS = 5
 const num_transactions = Math.floor(Math.random() * MAX_TRANSACTIONS) + 1
 console.log( `Number of transactions: ${num_transactions}` )
 
@@ -113,26 +115,42 @@ console.log( transactions )
 const xacts = {}
 console.log( typeof xacts )
 
-transactions.map( transaction => {
+transactions.map( (transaction,idx) => {
     const { parasite, benefactor, owed } = transaction
+    console.log( `XACT: ${idx + 1}` )
     console.log( parasite, benefactor, owed )
 
     const key = `${parasite}_${benefactor}`
+    // console.log( key )
+    // console.log( typeof key )
 
-    const current = xacts[key]
-    //console.log( current )
-    //console.log( typeof current )
+    const current = xacts[`${key}`]
+    console.log( current )
+    console.log( typeof current )
     console.log( typeof owed )
 
-    if ( current !== 'undefined' ) {
-	xacts.key = current + owed
+    if ( current ) {
+	console.log( 'there' )
+	xacts[`${key}`] = current + owed
     } else {
-	xacts.key = owed
+	console.log( 'here')
+	xacts[`${key}`] = owed
+	console.log( xacts )
+	console.log( 'que?' )
     }
-    console.log( key )
-    console.log( xacts.key )
+
+    // console.log( xacts[`${key}`] )
 })
 
 console.log( xacts )
 
 process.exit( 0 )
+
+
+const hash = {}
+console.log( hash )
+console.log( typeof hash )
+
+const key = '1_2'
+hash[`${key}`] = 5.6
+console.log( hash )
