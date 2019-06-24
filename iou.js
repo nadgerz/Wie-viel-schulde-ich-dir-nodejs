@@ -44,7 +44,7 @@ let all_people = [
     'Blake, William',
 ];
 
-all_people = [ "steve", "maurice", "kerstin", "bernhard", "simone", "katarina" ]
+all_people = [ "steve", "maurice", "kerstin", "bernhard", "simone", "katharina" ]
 // console.log( all_people )
 
 //
@@ -52,12 +52,12 @@ all_people = [ "steve", "maurice", "kerstin", "bernhard", "simone", "katarina" ]
 //    a minimum of 2 people.
 //
 const num_people = Math.floor(Math.random() * all_people.length) + 2
-// console.log( num_people )
+console.log( `Number of people: ${num_people}` )
 //process.exit(0)
 
-// const people = all_people.slice(0, num_people)
-const people = all_people.slice(0, 3)
-// console.log( people )
+const people = all_people.slice(0, num_people)
+// const people = all_people.slice(0, 3)
+console.log( people )
 // process.exit(0)
 
 //
@@ -99,7 +99,7 @@ for( i = 1; i<= num_transactions; i++) {
     const owed = Math.floor(Math.random() * MAX_OWED * 100)
     // console.log( `Owed => ${owed}`)
 
-    console.log( `Xact ${i}: ${people[p1]} owes ${people[p2]} $${owed}`)
+    console.log( `Xact ${i}: ${people[p1]} owes ${people[p2]} $${owed/100}`)
 
     transactions = transactions.concat(
 	{
@@ -135,7 +135,7 @@ transactions.map( (transaction,idx) => {
 	// console.log( 'there' )
 	xacts[`${key}`] = current + owed
     } else {
-	console.log( 'here')
+	// console.log( 'here')
 	xacts[`${key}`] = owed
 	// console.log( xacts )
 	// console.log( 'que?' )
@@ -151,41 +151,54 @@ console.log( xacts )
 //    and simplify.
 //
 let keys = Object.entries(xacts).map(([key, value]) => {
-    console.log( key )
-    console.log( value )
+    // console.log( key )
+    // console.log( value )
     return key
 })
 
 console.log( keys )
 
 //
-//    Change to foreach
+//    Change to foreach?
 //
 for( i = 0; i < keys.length; i++) {
     [p1, p2] = keys[i].split('_')
-    const owed = xacts[`${keys[i]}`]
+    const key = `${keys[i]}`
+    const owed = xacts[`${key}`]
 
     console.log( `Loop ${i}`, p1, p2, owed )
 
     const opposite_key = `${p2}_${p1}`
     const opposite_owed = xacts[`${opposite_key}`]
-    console.log( opposite_key )
-    console.log( opposite_owed )
+    // console.log( opposite_key )
+    // console.log( opposite_owed )
 
     if (opposite_owed) {
 	if ( owed >= opposite_owed ) {
 	    const new_owed = owed - opposite_owed
-	    xacts[i] = new_owed
+	    xacts[`${key}`] = new_owed
 	    xacts[`${opposite_key}`] = 0
 	} else {
 	    const new_owed = opposite_owed - owed
 	    xacts[`${opposite_key}`] = new_owed
-	    xacts[i] = 0
+	    xacts[`${key}`] = 0
 	}
     }
 }
 
 console.log( xacts )
+
+//
+//    Now remove the ones that are 0
+//
+/*
+const unique_xacts = xacts.filter( (xact, idx) => {
+    console.log( `QQQ - ${xact} - ${idx}`)
+    return xact.owed != 0
+})
+
+console.log( unique_xacts )
+*/
 
 process.exit( 0 )
 
