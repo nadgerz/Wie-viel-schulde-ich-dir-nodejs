@@ -55,8 +55,8 @@ const num_people = Math.floor(Math.random() * all_people.length) + 2
 console.log( `Number of people: ${num_people}` )
 //process.exit(0)
 
-const people = all_people.slice(0, num_people)
-// const people = all_people.slice(0, 3)
+// const people = all_people.slice(0, num_people)
+let people = all_people.slice(0, 3)
 console.log( people )
 // process.exit(0)
 
@@ -65,12 +65,14 @@ console.log( people )
 //
 const MAX_TRANSACTIONS = 20
 // const MAX_TRANSACTIONS = 5
-const num_transactions = Math.floor(Math.random() * MAX_TRANSACTIONS) + 1
+let num_transactions = Math.floor(Math.random() * MAX_TRANSACTIONS) + 1
+num_transactions = 20
 console.log( `Number of transactions: ${num_transactions}` )
 
 //
 //    Generate some random transactions.
 //
+console.log( `Generate ${num_transactions} transactions.`)
 let transactions = []
 const MAX_OWED = 20;
 
@@ -101,18 +103,17 @@ for( i = 1; i<= num_transactions; i++) {
 
     console.log( `Xact ${i}: ${people[p1]} owes ${people[p2]} $${owed/100}`)
 
-    transactions = transactions.concat(
-	{
-	    parasite: p1,
-	    benefactor: p2,
-	    owed
-	}
-    )
+    transactions = transactions.concat( {
+	parasite: p1,
+	benefactor: p2,
+	owed
+    })
 }
 
 console.log( transactions )
 
 
+console.log( `Make single transaction for each parasite/benefactor pair.`)
 // Now run along transactions array and make a hash for the amount.
 const xacts = {}
 // console.log( typeof xacts )
@@ -178,10 +179,16 @@ for( i = 0; i < keys.length; i++) {
 	    const new_owed = owed - opposite_owed
 	    xacts[`${key}`] = new_owed
 	    xacts[`${opposite_key}`] = 0
+
+	    console.log( `${key} => ${new_owed}`)
+	    console.log( `${opposite_key} => 0`)
 	} else {
 	    const new_owed = opposite_owed - owed
 	    xacts[`${opposite_key}`] = new_owed
 	    xacts[`${key}`] = 0
+
+	    console.log( `${key} => 0`)
+	    console.log( `${opposite_key} => ${new_owed}`)
 	}
     }
 }
@@ -191,14 +198,28 @@ console.log( xacts )
 //
 //    Now remove the ones that are 0
 //
-/*
-const unique_xacts = xacts.filter( (xact, idx) => {
-    console.log( `QQQ - ${xact} - ${idx}`)
-    return xact.owed != 0
-})
+//    Generate a new transaction list.
+//
+console.log( `Remove entries where 0 is owed.`)
+transactions = []
 
-console.log( unique_xacts )
-*/
+for( i = 0; i < keys.length; i++) {
+    [p1, p2] = keys[i].split('_')
+    const key = `${keys[i]}`
+    const owed = xacts[`${key}`]
+
+    console.log( `CHECK-0 ${i}`, p1, p2, owed )
+
+    if (owed != 0) {
+	transactions = transactions.concat( {
+	    parasite: p1,
+	    benefactor: p2,
+	    owed
+	})
+    }
+}
+
+console.log( transactions )
 
 process.exit( 0 )
 
