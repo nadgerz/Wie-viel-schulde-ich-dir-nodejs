@@ -264,18 +264,30 @@ for (i = 0; i < keys.length; i++) {
 
 console.log(transactions);
 
+console.log(`Sort by parasite number`);
+const sortedByParasiteNumber = transactions.sort((a, b) => {
+  return a.parasite < b.parasite ? a : b;
+});
+
+console.log(sortedByParasiteNumber);
+
 //
 //    Who has the most transactions?
 //
-const transportation = data.reduce(function(obj, item) {
-  if (!obj[item]) {
-    obj[item] = 0;
+console.log(`Who is the biggest parasite by number of transactions?`);
+const counts = transactions.reduce(function(obj, item) {
+  // console.log(obj);
+  // console.log(item);
+  const parasite = item.parasite;
+
+  if (!obj[parasite]) {
+    obj[parasite] = 0;
   }
-  obj[item]++;
+  obj[parasite]++;
   return obj;
 }, {});
 
-console.log(transportation);
+console.log(JSON.stringify(counts, null, 4));
 
 process.exit(0);
 
