@@ -260,8 +260,8 @@ for (i = 0; i < keys.length; i++) {
 
   if (owed != 0) {
     transactions = transactions.concat({
-      parasite: p1,
-      benefactor: p2,
+      parasite: parseInt(p1, 10),
+      benefactor: parseInt(p2, 10),
       owed
     });
   }
@@ -407,6 +407,44 @@ const uniqueBenefactorKeys = Object.entries(benefactorKeys).map(([key, val]) =>
 );
 
 console.log(uniqueBenefactorKeys);
+
+console.log(`Get all options`);
+console.log(`---------------`);
+
+uniqueParasiteKeys.forEach(pKey => {
+  // console.log(pKey);
+  uniqueBenefactorKeys.forEach(bKey => {
+    // console.log(bKey);
+    const p = transactions.find(transaction => {
+      // console.log(transaction);
+      const p = transaction.parasite;
+      const b = transaction.benefactor;
+
+      // console.log(p, pKey, b, bKey);
+
+      return p === pKey && b === bKey;
+    });
+
+    if (p) {
+      // found a parasite record - to be fair, this is every transaction.
+      console.log(p);
+      // is the benefactor B also a parasite
+      // that has a benefactor P
+      const b = transactions.find(transaction => {
+        const p = transaction.parasite;
+
+        return p === bKey;
+      });
+
+      if (b) {
+        console.log('Parasite');
+        console.log(p);
+        console.log("benefactors of p that are parasites too");
+        console.log(b);
+      }
+    }
+  });
+});
 
 process.exit(0);
 
