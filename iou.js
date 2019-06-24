@@ -374,8 +374,8 @@ parasiteKeys = transactions.reduce(function(obj, item) {
 
 console.log(parasiteKeys);
 
-const uniqueParasiteKeys = Object.entries(parasiteKeys).map(
-  ([key, val]) => key
+const uniqueParasiteKeys = Object.entries(parasiteKeys).map(([key, val]) =>
+  parseInt(key, 10)
 );
 
 console.log(uniqueParasiteKeys);
@@ -402,8 +402,8 @@ benefactorKeys = transactions.reduce(function(obj, item) {
 
 console.log(benefactorKeys);
 
-const uniqueBenefactorKeys = Object.entries(benefactorKeys).map(
-  ([key, val]) => key
+const uniqueBenefactorKeys = Object.entries(benefactorKeys).map(([key, val]) =>
+  parseInt(key, 10)
 );
 
 console.log(uniqueBenefactorKeys);
@@ -411,12 +411,6 @@ console.log(uniqueBenefactorKeys);
 process.exit(0);
 
 /*
-a)
-get all parasite keys
-
-b)
-get all benefactor keys
-
 c)
 
   { parasite: '2', benefactor: '0', owed: 3907 },
