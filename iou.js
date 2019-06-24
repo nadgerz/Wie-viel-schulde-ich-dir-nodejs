@@ -1,4 +1,9 @@
+const formatObj = obj => JSON.stringify(obj, null, 4);
+
+//
 // faker for 100 unique name
+//
+
 let all_people = [
   "Beck, Glenn",
   "Becker, Carl",
@@ -346,6 +351,122 @@ const benefactorAmountsByValue = transactions.reduce(function(obj, item) {
 }, {});
 
 console.log(JSON.stringify(benefactorAmountsByValue, null, 4));
+
+console.log(`Get all parasite keys used`);
+let parasiteKeys;
+/*
+parasiteKeys = transactions.map(transaction => {
+  return transaction.parasite;
+});
+
+console.log(parasiteKeys);
+*/
+
+parasiteKeys = transactions.reduce(function(obj, item) {
+  const parasite = item.parasite;
+
+  if (!obj[parasite]) {
+    obj[parasite] = 0;
+  }
+  obj[parasite]++;
+  return obj;
+}, {});
+
+console.log(parasiteKeys);
+
+const uniqueParasiteKeys = Object.entries(parasiteKeys).map(
+  ([key, val]) => key
+);
+
+console.log(uniqueParasiteKeys);
+
+console.log(`Get all benefactor keys used`);
+let benefactorKeys;
+/*
+benefactorKeys = transactions.map(transaction => {
+  return transaction.benefactor;
+});
+
+console.log(benefactorKeys);
+*/
+
+benefactorKeys = transactions.reduce(function(obj, item) {
+  const benefactor = item.benefactor;
+
+  if (!obj[benefactor]) {
+    obj[benefactor] = 0;
+  }
+  obj[benefactor]++;
+  return obj;
+}, {});
+
+console.log(benefactorKeys);
+
+const uniqueBenefactorKeys = Object.entries(benefactorKeys).map(
+  ([key, val]) => key
+);
+
+console.log(uniqueBenefactorKeys);
+
+process.exit(0);
+
+/*
+a)
+get all parasite keys
+
+b)
+get all benefactor keys
+
+c)
+
+  { parasite: '2', benefactor: '0', owed: 3907 },
+  { parasite: '0', benefactor: '3', owed: 187 },
+  { parasite: '3', benefactor: '2', owed: 1240 },
+
+for each parasite P
+   for all benefactor B (!=P)
+      is the benefactor B also a parasite
+         that has a benefactor P
+
+	     store all 3 xacts:
+	        P -> B
+		B -> X
+		X -> P
+
+	     check if E2 < E1 && E2 < E3
+
+	     if all true, then
+
+	        P -> B (A -= E2)
+		delete B -> X
+	        X -> P (A -= E2)
+
+
+d)
+
+  { parasite: '2', benefactor: '0', owed: 3720 },
+  { parasite: '3', benefactor: '2', owed: 1053 },
+
+for each parasite P
+    for each benefactor B1
+       is there a B2 -> P where B1 != B2 (probably impossible  for B1 == B2 at this point)
+
+       Note sure the use of this, but...
+
+
+  { parasite: '2', benefactor: '0', owed: 3720 },
+  { parasite: '3', benefactor: '2', owed: 1053 },
+
+  =>
+
+  { parasite: '2', benefactor: '0', owed: 3720 - 1053 },
+  { parasite: '3', benefactor: '0', owed: 1053 },
+
+  =>
+
+  { parasite: '2', benefactor: '0', owed: 2667 },
+  { parasite: '3', benefactor: '0', owed: 1053 },
+*/
 
 process.exit(0);
 
