@@ -101,15 +101,15 @@ console.log( `Number of people: ${num_people}` )
 //process.exit(0)
 
 let people = all_people.slice(0, num_people)
-// people = all_people.slice(0, 3)
+people = all_people.slice(0, 5)
 console.log( people )
 // process.exit(0)
 
 //
 //    Create a random number of transaction.
 //
-const MAX_TRANSACTIONS = 20
-// const MAX_TRANSACTIONS = 5
+let MAX_TRANSACTIONS = 200
+MAX_TRANSACTIONS = 5
 let num_transactions = Math.floor(Math.random() * MAX_TRANSACTIONS) + 1
 num_transactions = 20
 console.log( `Number of transactions: ${num_transactions}` )
