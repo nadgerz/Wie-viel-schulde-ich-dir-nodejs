@@ -44,7 +44,52 @@ let all_people = [
     'Blake, William',
 ];
 
-all_people = [ "steve", "maurice", "kerstin", "bernhard", "simone", "katharina" ]
+all_people = [
+    "ambrose",
+    "aneurin",
+    "augustine",
+    "bernhard",
+    "carl",
+    "chester",
+    "david",
+    "elk",
+    "eric",
+    "erin",
+    "frank",
+    "glenn",
+    "halle",
+    "henry",
+    "hilaire",
+    "ingmar",
+    "irving",
+    "joseph",
+    "josh",
+    "katharina",
+    "ken",
+    "kerstin",
+    "leana",
+    "lloyd",
+    "luciano",
+    "ludwig",
+    "maurice",
+    "menachem",
+    "mick",
+    "milton",
+    "peter",
+    "ric",
+    "robert",
+    "samuel",
+    "sandra",
+    "saul",
+    "silas",
+    "simone",
+    "steve",
+    "tony",
+    "walter",
+    "wendell",
+    "william",
+    "yogi"
+]
 // console.log( all_people )
 
 //
@@ -55,8 +100,8 @@ const num_people = Math.floor(Math.random() * all_people.length) + 2
 console.log( `Number of people: ${num_people}` )
 //process.exit(0)
 
-// const people = all_people.slice(0, num_people)
-let people = all_people.slice(0, 3)
+let people = all_people.slice(0, num_people)
+// people = all_people.slice(0, 3)
 console.log( people )
 // process.exit(0)
 
