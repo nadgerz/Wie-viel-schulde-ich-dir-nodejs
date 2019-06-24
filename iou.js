@@ -266,16 +266,25 @@ console.log(transactions);
 
 console.log(`Sort by parasite number`);
 const sortedByParasiteNumber = transactions.sort((a, b) => {
-  return a.parasite < b.parasite ? a : b;
+  return a.parasite < b.parasite ? -1 : 1;
 });
 
 console.log(sortedByParasiteNumber);
 
+console.log(`Sort by benefactor number`);
+const sortedByBenefactorNumber = transactions.sort((a, b) => {
+  return a.benefactor < b.benefactor ? -1 : 1;
+});
+
+console.log(sortedByBenefactorNumber);
+
 //
 //    Who has the most transactions?
 //
+//    Parasite..
+//
 console.log(`Who is the biggest parasite by number of transactions?`);
-const counts = transactions.reduce(function(obj, item) {
+const parasiteCounts = transactions.reduce(function(obj, item) {
   // console.log(obj);
   // console.log(item);
   const parasite = item.parasite;
@@ -287,7 +296,56 @@ const counts = transactions.reduce(function(obj, item) {
   return obj;
 }, {});
 
-console.log(JSON.stringify(counts, null, 4));
+console.log(JSON.stringify(parasiteCounts, null, 4));
+
+//
+//    Benefactor..
+//
+console.log(`Who is the biggest benefactor by number of transactions?`);
+const benefactorCounts = transactions.reduce(function(obj, item) {
+  // console.log(obj);
+  // console.log(item);
+  const benefactor = item.benefactor;
+
+  if (!obj[benefactor]) {
+    obj[benefactor] = 0;
+  }
+  obj[benefactor]++;
+  return obj;
+}, {});
+
+console.log(JSON.stringify(benefactorCounts, null, 4));
+
+//
+//    Amount owing...
+//
+console.log(`Who owes the most?[parasite]`);
+const parasiteAmountsByValue = transactions.reduce(function(obj, item) {
+  const parasite = item.parasite;
+  const owed = item.owed;
+
+  if (!obj[parasite]) {
+    obj[parasite] = 0;
+  }
+  obj[parasite] += owed;
+  return obj;
+}, {});
+
+console.log(JSON.stringify(parasiteAmountsByValue, null, 4));
+
+console.log(`Who owes the most?[benefactor]`);
+const benefactorAmountsByValue = transactions.reduce(function(obj, item) {
+  const benefactor = item.benefactor;
+  const owed = item.owed;
+
+  if (!obj[benefactor]) {
+    obj[benefactor] = 0;
+  }
+  obj[benefactor] += owed;
+  return obj;
+}, {});
+
+console.log(JSON.stringify(benefactorAmountsByValue, null, 4));
 
 process.exit(0);
 
