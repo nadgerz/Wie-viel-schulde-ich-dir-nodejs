@@ -5,7 +5,7 @@ Splittr(lite)
 TODO:
 
 o	save to local storage
-o	name of plsittr session
+o	name of splittr session
 o	enter number of people - P
 	    or a pulldown one can add to?
 
