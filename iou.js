@@ -208,7 +208,7 @@ let keys = Object.entries(xacts).map(([key, value]) => {
 console.log(keys);
 
 //
-//    Change to foreach?
+//    Change to forEach?
 //
 for (i = 0; i < keys.length; i++) {
   [p1, p2] = keys[i].split("_");
@@ -412,36 +412,42 @@ console.log(`Get all options`);
 console.log(`---------------`);
 
 uniqueParasiteKeys.forEach(pKey => {
-  // console.log(pKey);
   uniqueBenefactorKeys.forEach(bKey => {
-    // console.log(bKey);
     const p = transactions.find(transaction => {
-      // console.log(transaction);
       const p = transaction.parasite;
       const b = transaction.benefactor;
-
-      // console.log(p, pKey, b, bKey);
 
       return p === pKey && b === bKey;
     });
 
     if (p) {
       // found a parasite record - to be fair, this is every transaction.
+      console.log(`Found a parasite... bKey=${bKey}`);
       console.log(p);
+
       // is the benefactor B also a parasite
-      // that has a benefactor P
-      const b = transactions.find(transaction => {
+      const b = transactions.filter(transaction => {
         const p = transaction.parasite;
 
         return p === bKey;
       });
 
       if (b) {
-        console.log('Parasite');
-        console.log(p);
-        console.log("benefactors of p that are parasites too");
+        console.log("Benefactors of p that are parasites too");
         console.log(b);
+        console.log(b.length);
+        // does one of these parasite records have a benefactor
+        // that is ALSO a parasite that has a BENEFACTOR that is the original pKey?
+        // Phew!
+        b.forEach(benefactorRecordThatIsAParasite => {
+          console.log(
+            "... look for a benefactor entry that also is a parasite"
+          );
+        });
+      } else {
+        console.log(`-- no parasite for Benefactor bKey=${bKey}`);
       }
+      console.log(`===`);
     }
   });
 });
